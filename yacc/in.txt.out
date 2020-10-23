@@ -1,0 +1,4 @@
+PROGRAM
+ `-DECL
+    `-HEAD
+       `-ATOM 'abd'
