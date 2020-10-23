@@ -9,11 +9,11 @@ uncommented = ""
 
 def p_omit_comments(p):
     '''uncommented  : ANYOTHER
-                    | ANYOTHER COMMENT uncommented '''
+                    | ANYOTHER COMSTART uncommented COMEND uncommented '''
     if len(p) == 2:
         p[0] = p[1]  # string
     else:
-        p[0] = p[1] + p[3]  # strings
+        p[0] = p[1] + p[5]  # strings
     global uncommented
     uncommented = str(p[0])
 

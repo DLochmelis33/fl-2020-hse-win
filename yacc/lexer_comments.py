@@ -1,13 +1,17 @@
 import ply.lex as lex_c
 
 tokens = [
-    'COMMENT',
-    'ANYOTHER'
+    # 'COMMENT',
+    'ANYOTHER',
+    'COMSTART',
+    'COMEND'
 ]
 
 t_ignore = ' \t'
-t_COMMENT = r'\(\*(.\n*)+?\*\)'
-t_ANYOTHER = r'((?!\(\*).)+'
+# t_COMMENT = r'\(\*(.\n*)+?\*\)'
+t_ANYOTHER = r'((?!(\(\*)|(\*\))).\s*\n*)+'
+t_COMSTART = r'\(\*'
+t_COMEND = r'\*\)'
 
 
 def t_newline(t):
@@ -17,9 +21,9 @@ def t_newline(t):
 
 def t_error(t):
     if t:
-        raise SyntaxError("Illegal character '" +
+        raise SyntaxError("Illegal yaracter '" +
                           str(t.value[0]) + "' at line " + str(t.lexer.lineno))
-    raise SyntaxError('Expected character but got none')
+    raise SyntaxError('Expected yaracter but got none')
 
 
 lexer = lex_c.lex()

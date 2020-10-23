@@ -2,478 +2,80 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Grammar
 
-Rule 0     S' -> program
-Rule 1     program -> decl_seq
-Rule 2     decl_seq -> decl
-Rule 3     decl_seq -> decl decl_seq
-Rule 4     decl -> head CORKSCREW body DOT
-Rule 5     decl -> head DOT
-Rule 6     head -> atom
-Rule 7     atom -> ID
-Rule 8     atom -> ID atom_seq
-Rule 9     atom_paren -> LPAREN atom_paren RPAREN
-Rule 10    atom_paren -> LPAREN atom RPAREN
-Rule 11    atom_simple -> ID
-Rule 12    atom_seq -> atom_simple
-Rule 13    atom_seq -> atom_paren
-Rule 14    atom_seq -> atom_simple atom_seq
-Rule 15    atom_seq -> atom_paren atom_seq
-Rule 16    body -> expr_disj
-Rule 17    expr_disj -> expr_conj DISJ expr_disj
-Rule 18    expr_disj -> expr_conj
-Rule 19    expr_conj -> expr_paren CONJ expr_conj
-Rule 20    expr_conj -> expr_paren
-Rule 21    expr_paren -> atom
-Rule 22    expr_paren -> LPAREN expr_disj RPAREN
+Rule 0     S' -> uncommented
+Rule 1     uncommented -> ANYOTHER
+Rule 2     uncommented -> ANYOTHER COMSTART uncommented COMEND uncommented
 
 Terminals, with rules where they appear
 
-CONJ                 : 19
-CORKSCREW            : 4
-DISJ                 : 17
-DOT                  : 4 5
-ID                   : 7 8 11
-LPAREN               : 9 10 22
-RPAREN               : 9 10 22
+ANYOTHER             : 1 2
+COMEND               : 2
+COMSTART             : 2
 error                : 
 
 Nonterminals, with rules where they appear
 
-atom                 : 6 10 21
-atom_paren           : 9 13 15
-atom_seq             : 8 14 15
-atom_simple          : 12 14
-body                 : 4
-decl                 : 2 3
-decl_seq             : 1 3
-expr_conj            : 17 18 19
-expr_disj            : 16 17 22
-expr_paren           : 19 20
-head                 : 4 5
-program              : 0
+uncommented          : 2 2 0
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . program
-    (1) program -> . decl_seq
-    (2) decl_seq -> . decl
-    (3) decl_seq -> . decl decl_seq
-    (4) decl -> . head CORKSCREW body DOT
-    (5) decl -> . head DOT
-    (6) head -> . atom
-    (7) atom -> . ID
-    (8) atom -> . ID atom_seq
+    (0) S' -> . uncommented
+    (1) uncommented -> . ANYOTHER
+    (2) uncommented -> . ANYOTHER COMSTART uncommented COMEND uncommented
 
-    ID              shift and go to state 6
+    ANYOTHER        shift and go to state 2
 
-    program                        shift and go to state 1
-    decl_seq                       shift and go to state 2
-    decl                           shift and go to state 3
-    head                           shift and go to state 4
-    atom                           shift and go to state 5
+    uncommented                    shift and go to state 1
 
 state 1
 
-    (0) S' -> program .
+    (0) S' -> uncommented .
 
 
 
 state 2
 
-    (1) program -> decl_seq .
+    (1) uncommented -> ANYOTHER .
+    (2) uncommented -> ANYOTHER . COMSTART uncommented COMEND uncommented
 
-    $end            reduce using rule 1 (program -> decl_seq .)
+    $end            reduce using rule 1 (uncommented -> ANYOTHER .)
+    COMEND          reduce using rule 1 (uncommented -> ANYOTHER .)
+    COMSTART        shift and go to state 3
 
 
 state 3
 
-    (2) decl_seq -> decl .
-    (3) decl_seq -> decl . decl_seq
-    (2) decl_seq -> . decl
-    (3) decl_seq -> . decl decl_seq
-    (4) decl -> . head CORKSCREW body DOT
-    (5) decl -> . head DOT
-    (6) head -> . atom
-    (7) atom -> . ID
-    (8) atom -> . ID atom_seq
+    (2) uncommented -> ANYOTHER COMSTART . uncommented COMEND uncommented
+    (1) uncommented -> . ANYOTHER
+    (2) uncommented -> . ANYOTHER COMSTART uncommented COMEND uncommented
 
-    $end            reduce using rule 2 (decl_seq -> decl .)
-    ID              shift and go to state 6
+    ANYOTHER        shift and go to state 2
 
-    decl                           shift and go to state 3
-    decl_seq                       shift and go to state 7
-    head                           shift and go to state 4
-    atom                           shift and go to state 5
+    uncommented                    shift and go to state 4
 
 state 4
 
-    (4) decl -> head . CORKSCREW body DOT
-    (5) decl -> head . DOT
+    (2) uncommented -> ANYOTHER COMSTART uncommented . COMEND uncommented
 
-    CORKSCREW       shift and go to state 8
-    DOT             shift and go to state 9
+    COMEND          shift and go to state 5
 
 
 state 5
 
-    (6) head -> atom .
+    (2) uncommented -> ANYOTHER COMSTART uncommented COMEND . uncommented
+    (1) uncommented -> . ANYOTHER
+    (2) uncommented -> . ANYOTHER COMSTART uncommented COMEND uncommented
 
-    CORKSCREW       reduce using rule 6 (head -> atom .)
-    DOT             reduce using rule 6 (head -> atom .)
+    ANYOTHER        shift and go to state 2
 
+    uncommented                    shift and go to state 6
 
 state 6
 
-    (7) atom -> ID .
-    (8) atom -> ID . atom_seq
-    (12) atom_seq -> . atom_simple
-    (13) atom_seq -> . atom_paren
-    (14) atom_seq -> . atom_simple atom_seq
-    (15) atom_seq -> . atom_paren atom_seq
-    (11) atom_simple -> . ID
-    (9) atom_paren -> . LPAREN atom_paren RPAREN
-    (10) atom_paren -> . LPAREN atom RPAREN
+    (2) uncommented -> ANYOTHER COMSTART uncommented COMEND uncommented .
 
-    CORKSCREW       reduce using rule 7 (atom -> ID .)
-    DOT             reduce using rule 7 (atom -> ID .)
-    CONJ            reduce using rule 7 (atom -> ID .)
-    DISJ            reduce using rule 7 (atom -> ID .)
-    RPAREN          reduce using rule 7 (atom -> ID .)
-    ID              shift and go to state 10
-    LPAREN          shift and go to state 14
-
-    atom_seq                       shift and go to state 11
-    atom_simple                    shift and go to state 12
-    atom_paren                     shift and go to state 13
-
-state 7
-
-    (3) decl_seq -> decl decl_seq .
-
-    $end            reduce using rule 3 (decl_seq -> decl decl_seq .)
-
-
-state 8
-
-    (4) decl -> head CORKSCREW . body DOT
-    (16) body -> . expr_disj
-    (17) expr_disj -> . expr_conj DISJ expr_disj
-    (18) expr_disj -> . expr_conj
-    (19) expr_conj -> . expr_paren CONJ expr_conj
-    (20) expr_conj -> . expr_paren
-    (21) expr_paren -> . atom
-    (22) expr_paren -> . LPAREN expr_disj RPAREN
-    (7) atom -> . ID
-    (8) atom -> . ID atom_seq
-
-    LPAREN          shift and go to state 20
-    ID              shift and go to state 6
-
-    body                           shift and go to state 15
-    expr_disj                      shift and go to state 16
-    expr_conj                      shift and go to state 17
-    expr_paren                     shift and go to state 18
-    atom                           shift and go to state 19
-
-state 9
-
-    (5) decl -> head DOT .
-
-    ID              reduce using rule 5 (decl -> head DOT .)
-    $end            reduce using rule 5 (decl -> head DOT .)
-
-
-state 10
-
-    (11) atom_simple -> ID .
-
-    ID              reduce using rule 11 (atom_simple -> ID .)
-    LPAREN          reduce using rule 11 (atom_simple -> ID .)
-    CORKSCREW       reduce using rule 11 (atom_simple -> ID .)
-    DOT             reduce using rule 11 (atom_simple -> ID .)
-    CONJ            reduce using rule 11 (atom_simple -> ID .)
-    DISJ            reduce using rule 11 (atom_simple -> ID .)
-    RPAREN          reduce using rule 11 (atom_simple -> ID .)
-
-
-state 11
-
-    (8) atom -> ID atom_seq .
-
-    CORKSCREW       reduce using rule 8 (atom -> ID atom_seq .)
-    DOT             reduce using rule 8 (atom -> ID atom_seq .)
-    CONJ            reduce using rule 8 (atom -> ID atom_seq .)
-    DISJ            reduce using rule 8 (atom -> ID atom_seq .)
-    RPAREN          reduce using rule 8 (atom -> ID atom_seq .)
-
-
-state 12
-
-    (12) atom_seq -> atom_simple .
-    (14) atom_seq -> atom_simple . atom_seq
-    (12) atom_seq -> . atom_simple
-    (13) atom_seq -> . atom_paren
-    (14) atom_seq -> . atom_simple atom_seq
-    (15) atom_seq -> . atom_paren atom_seq
-    (11) atom_simple -> . ID
-    (9) atom_paren -> . LPAREN atom_paren RPAREN
-    (10) atom_paren -> . LPAREN atom RPAREN
-
-    CORKSCREW       reduce using rule 12 (atom_seq -> atom_simple .)
-    DOT             reduce using rule 12 (atom_seq -> atom_simple .)
-    CONJ            reduce using rule 12 (atom_seq -> atom_simple .)
-    DISJ            reduce using rule 12 (atom_seq -> atom_simple .)
-    RPAREN          reduce using rule 12 (atom_seq -> atom_simple .)
-    ID              shift and go to state 10
-    LPAREN          shift and go to state 14
-
-    atom_simple                    shift and go to state 12
-    atom_seq                       shift and go to state 21
-    atom_paren                     shift and go to state 13
-
-state 13
-
-    (13) atom_seq -> atom_paren .
-    (15) atom_seq -> atom_paren . atom_seq
-    (12) atom_seq -> . atom_simple
-    (13) atom_seq -> . atom_paren
-    (14) atom_seq -> . atom_simple atom_seq
-    (15) atom_seq -> . atom_paren atom_seq
-    (11) atom_simple -> . ID
-    (9) atom_paren -> . LPAREN atom_paren RPAREN
-    (10) atom_paren -> . LPAREN atom RPAREN
-
-    CORKSCREW       reduce using rule 13 (atom_seq -> atom_paren .)
-    DOT             reduce using rule 13 (atom_seq -> atom_paren .)
-    CONJ            reduce using rule 13 (atom_seq -> atom_paren .)
-    DISJ            reduce using rule 13 (atom_seq -> atom_paren .)
-    RPAREN          reduce using rule 13 (atom_seq -> atom_paren .)
-    ID              shift and go to state 10
-    LPAREN          shift and go to state 14
-
-    atom_paren                     shift and go to state 13
-    atom_seq                       shift and go to state 22
-    atom_simple                    shift and go to state 12
-
-state 14
-
-    (9) atom_paren -> LPAREN . atom_paren RPAREN
-    (10) atom_paren -> LPAREN . atom RPAREN
-    (9) atom_paren -> . LPAREN atom_paren RPAREN
-    (10) atom_paren -> . LPAREN atom RPAREN
-    (7) atom -> . ID
-    (8) atom -> . ID atom_seq
-
-    LPAREN          shift and go to state 14
-    ID              shift and go to state 6
-
-    atom_paren                     shift and go to state 23
-    atom                           shift and go to state 24
-
-state 15
-
-    (4) decl -> head CORKSCREW body . DOT
-
-    DOT             shift and go to state 25
-
-
-state 16
-
-    (16) body -> expr_disj .
-
-    DOT             reduce using rule 16 (body -> expr_disj .)
-
-
-state 17
-
-    (17) expr_disj -> expr_conj . DISJ expr_disj
-    (18) expr_disj -> expr_conj .
-
-    DISJ            shift and go to state 26
-    DOT             reduce using rule 18 (expr_disj -> expr_conj .)
-    RPAREN          reduce using rule 18 (expr_disj -> expr_conj .)
-
-
-state 18
-
-    (19) expr_conj -> expr_paren . CONJ expr_conj
-    (20) expr_conj -> expr_paren .
-
-    CONJ            shift and go to state 27
-    DISJ            reduce using rule 20 (expr_conj -> expr_paren .)
-    DOT             reduce using rule 20 (expr_conj -> expr_paren .)
-    RPAREN          reduce using rule 20 (expr_conj -> expr_paren .)
-
-
-state 19
-
-    (21) expr_paren -> atom .
-
-    CONJ            reduce using rule 21 (expr_paren -> atom .)
-    DISJ            reduce using rule 21 (expr_paren -> atom .)
-    DOT             reduce using rule 21 (expr_paren -> atom .)
-    RPAREN          reduce using rule 21 (expr_paren -> atom .)
-
-
-state 20
-
-    (22) expr_paren -> LPAREN . expr_disj RPAREN
-    (17) expr_disj -> . expr_conj DISJ expr_disj
-    (18) expr_disj -> . expr_conj
-    (19) expr_conj -> . expr_paren CONJ expr_conj
-    (20) expr_conj -> . expr_paren
-    (21) expr_paren -> . atom
-    (22) expr_paren -> . LPAREN expr_disj RPAREN
-    (7) atom -> . ID
-    (8) atom -> . ID atom_seq
-
-    LPAREN          shift and go to state 20
-    ID              shift and go to state 6
-
-    expr_disj                      shift and go to state 28
-    expr_conj                      shift and go to state 17
-    expr_paren                     shift and go to state 18
-    atom                           shift and go to state 19
-
-state 21
-
-    (14) atom_seq -> atom_simple atom_seq .
-
-    CORKSCREW       reduce using rule 14 (atom_seq -> atom_simple atom_seq .)
-    DOT             reduce using rule 14 (atom_seq -> atom_simple atom_seq .)
-    CONJ            reduce using rule 14 (atom_seq -> atom_simple atom_seq .)
-    DISJ            reduce using rule 14 (atom_seq -> atom_simple atom_seq .)
-    RPAREN          reduce using rule 14 (atom_seq -> atom_simple atom_seq .)
-
-
-state 22
-
-    (15) atom_seq -> atom_paren atom_seq .
-
-    CORKSCREW       reduce using rule 15 (atom_seq -> atom_paren atom_seq .)
-    DOT             reduce using rule 15 (atom_seq -> atom_paren atom_seq .)
-    CONJ            reduce using rule 15 (atom_seq -> atom_paren atom_seq .)
-    DISJ            reduce using rule 15 (atom_seq -> atom_paren atom_seq .)
-    RPAREN          reduce using rule 15 (atom_seq -> atom_paren atom_seq .)
-
-
-state 23
-
-    (9) atom_paren -> LPAREN atom_paren . RPAREN
-
-    RPAREN          shift and go to state 29
-
-
-state 24
-
-    (10) atom_paren -> LPAREN atom . RPAREN
-
-    RPAREN          shift and go to state 30
-
-
-state 25
-
-    (4) decl -> head CORKSCREW body DOT .
-
-    ID              reduce using rule 4 (decl -> head CORKSCREW body DOT .)
-    $end            reduce using rule 4 (decl -> head CORKSCREW body DOT .)
-
-
-state 26
-
-    (17) expr_disj -> expr_conj DISJ . expr_disj
-    (17) expr_disj -> . expr_conj DISJ expr_disj
-    (18) expr_disj -> . expr_conj
-    (19) expr_conj -> . expr_paren CONJ expr_conj
-    (20) expr_conj -> . expr_paren
-    (21) expr_paren -> . atom
-    (22) expr_paren -> . LPAREN expr_disj RPAREN
-    (7) atom -> . ID
-    (8) atom -> . ID atom_seq
-
-    LPAREN          shift and go to state 20
-    ID              shift and go to state 6
-
-    expr_conj                      shift and go to state 17
-    expr_disj                      shift and go to state 31
-    expr_paren                     shift and go to state 18
-    atom                           shift and go to state 19
-
-state 27
-
-    (19) expr_conj -> expr_paren CONJ . expr_conj
-    (19) expr_conj -> . expr_paren CONJ expr_conj
-    (20) expr_conj -> . expr_paren
-    (21) expr_paren -> . atom
-    (22) expr_paren -> . LPAREN expr_disj RPAREN
-    (7) atom -> . ID
-    (8) atom -> . ID atom_seq
-
-    LPAREN          shift and go to state 20
-    ID              shift and go to state 6
-
-    expr_paren                     shift and go to state 18
-    expr_conj                      shift and go to state 32
-    atom                           shift and go to state 19
-
-state 28
-
-    (22) expr_paren -> LPAREN expr_disj . RPAREN
-
-    RPAREN          shift and go to state 33
-
-
-state 29
-
-    (9) atom_paren -> LPAREN atom_paren RPAREN .
-
-    ID              reduce using rule 9 (atom_paren -> LPAREN atom_paren RPAREN .)
-    LPAREN          reduce using rule 9 (atom_paren -> LPAREN atom_paren RPAREN .)
-    CORKSCREW       reduce using rule 9 (atom_paren -> LPAREN atom_paren RPAREN .)
-    DOT             reduce using rule 9 (atom_paren -> LPAREN atom_paren RPAREN .)
-    CONJ            reduce using rule 9 (atom_paren -> LPAREN atom_paren RPAREN .)
-    DISJ            reduce using rule 9 (atom_paren -> LPAREN atom_paren RPAREN .)
-    RPAREN          reduce using rule 9 (atom_paren -> LPAREN atom_paren RPAREN .)
-
-
-state 30
-
-    (10) atom_paren -> LPAREN atom RPAREN .
-
-    ID              reduce using rule 10 (atom_paren -> LPAREN atom RPAREN .)
-    LPAREN          reduce using rule 10 (atom_paren -> LPAREN atom RPAREN .)
-    CORKSCREW       reduce using rule 10 (atom_paren -> LPAREN atom RPAREN .)
-    DOT             reduce using rule 10 (atom_paren -> LPAREN atom RPAREN .)
-    CONJ            reduce using rule 10 (atom_paren -> LPAREN atom RPAREN .)
-    DISJ            reduce using rule 10 (atom_paren -> LPAREN atom RPAREN .)
-    RPAREN          reduce using rule 10 (atom_paren -> LPAREN atom RPAREN .)
-
-
-state 31
-
-    (17) expr_disj -> expr_conj DISJ expr_disj .
-
-    DOT             reduce using rule 17 (expr_disj -> expr_conj DISJ expr_disj .)
-    RPAREN          reduce using rule 17 (expr_disj -> expr_conj DISJ expr_disj .)
-
-
-state 32
-
-    (19) expr_conj -> expr_paren CONJ expr_conj .
-
-    DISJ            reduce using rule 19 (expr_conj -> expr_paren CONJ expr_conj .)
-    DOT             reduce using rule 19 (expr_conj -> expr_paren CONJ expr_conj .)
-    RPAREN          reduce using rule 19 (expr_conj -> expr_paren CONJ expr_conj .)
-
-
-state 33
-
-    (22) expr_paren -> LPAREN expr_disj RPAREN .
-
-    CONJ            reduce using rule 22 (expr_paren -> LPAREN expr_disj RPAREN .)
-    DISJ            reduce using rule 22 (expr_paren -> LPAREN expr_disj RPAREN .)
-    DOT             reduce using rule 22 (expr_paren -> LPAREN expr_disj RPAREN .)
-    RPAREN          reduce using rule 22 (expr_paren -> LPAREN expr_disj RPAREN .)
+    $end            reduce using rule 2 (uncommented -> ANYOTHER COMSTART uncommented COMEND uncommented .)
+    COMEND          reduce using rule 2 (uncommented -> ANYOTHER COMSTART uncommented COMEND uncommented .)
 
