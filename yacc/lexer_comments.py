@@ -7,7 +7,7 @@ tokens = [
     'COMEND'
 ]
 
-t_ignore = ' \t'
+t_ignore = '\t'
 # t_COMMENT = r'\(\*(.\n*)+?\*\)'
 t_ANYOTHER = r'((?!(\(\*)|(\*\))).\s*\n*)+'
 t_COMSTART = r'\(\*'
