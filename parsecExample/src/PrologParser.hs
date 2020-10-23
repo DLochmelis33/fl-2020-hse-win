@@ -15,7 +15,9 @@ languageDef =
     { Token.identStart = lower,
       Token.identLetter = alphaNum <|> char '_',
       Token.reservedNames = ["module", "type"],
-      Token.reservedOpNames = [",", ";", "->", ":-"]
+      Token.reservedOpNames = [",", ";", "->", ":-"],
+      Token.commentStart = "(*",
+      Token.commentEnd = "*)"
     }
 
 lexer = Token.makeTokenParser languageDef
@@ -132,6 +134,7 @@ prog =
       types <- many typ
       rels <- many relation
       return $ Program Nothing types rels
+
 
 parseProgram :: String -> Either ParseError PrologProgram
 parseProgram =
